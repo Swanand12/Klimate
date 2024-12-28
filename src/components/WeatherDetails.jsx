@@ -4,6 +4,7 @@ import React from 'react'
 
 const WeatherDetails = ({weatherQuery}) => {
 
+    // finding wind diraction using degree
     const getWindDirection = (deg)=>{
         const direction = ["N","NW","W","SW","S","SE","E","NE"]
 
@@ -13,7 +14,7 @@ const WeatherDetails = ({weatherQuery}) => {
     }
 
     
-
+    // array of weather details
     const details = [
         {
             name:"Sunrise",
@@ -36,14 +37,14 @@ const WeatherDetails = ({weatherQuery}) => {
             value:`${weatherQuery?.data?.main?.pressure} hpa`
         },
     ]
-    console.log("e:",format(new Date(weatherQuery?.data?.sys?.sunrise * 1000), "HH:MMa"))
+
   return (
     <div className='flex flex-col bg-black rounded-lg px-8 py-8 w-full h-[fit-content]'>
         <h1 className='font-semibold text-2xl pb-6'>Weather Details</h1>
         
             <div className='gap-8 grid grid-cols-2 '>
                 {details.map((item,i)=>(
-                <div key={i} className={`flex px-4 items-center py-2 border border-gray-500 rounded-lg text-${item.icon_color}`}>
+                <div key={i} className={`flex px-4 items-center py-2 border-2 border-gray-500 rounded-lg text-${item.icon_color}`}>
                     {item.icon}
                     <div className='flex flex-col  pl-4'>
                         <p className='text-lg'>{item.name}</p>

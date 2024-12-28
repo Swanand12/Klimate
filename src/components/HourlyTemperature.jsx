@@ -4,12 +4,13 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip } from 'rec
 
 const HourlyTemperature = ({forecastQuery}) => {
 
+  // data for graph
   const chartData = forecastQuery?.data?.list.slice(0,8).map((n)=>({
     temp:Math.round(n?.main?.temp),
     feels_like: Math.round(n?.main?.feels_like),
     time:format(new Date(n?.dt * 1000),"ha")
 }))
-  console.log(chartData)
+
 
   return (
     <div className='xl:min-w-[580px]  h-full font-semibold bg-black px-8 py-6 rounded-lg'>

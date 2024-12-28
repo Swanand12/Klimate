@@ -5,19 +5,33 @@ import { useGeoLocation } from '@/hooks/useGeoLocation'
 import { useForecastQuery, useReverseCodingQuery, useWeatherQuery } from '@/hooks/useWeather'
 import { MapPin, RefreshCcw, Terminal } from 'lucide-react'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import CurrentWeather from '@/components/CurrentWeather'
 import HourlyTemperature from '@/components/HourlyTemperature'
 import WeatherDetails from '@/components/WeatherDetails'
 import WeatherForecast from '@/components/WeatherForecast'
+import Favourites from '@/components/Favourites'
+import WeatherSkeleton from '@/components/WeatherSkeleton'
+
 
 const WeatherDashboard = () => {
+    // fetched current location cooordinates
     const {coordinates,isLoading:locationLoading,isError:locationError,geoLocation} = useGeoLocation()
 
+    // fetched all the weather data
     const weatherQuery = useWeatherQuery(coordinates)
     const forecastQuery = useForecastQuery(coordinates)
     const locationQuery = useReverseCodingQuery(coordinates)
+    
+    useEffect(()=>{
+      if(coordinates){
+        weatherQuery.refetch()
+        forecastQuery.refetch()
+        locationQuery.refetch()
+    }
+    },[coordinates])
 
+    // fetched current location coordinates and weather data again
     const handleRefresh = ()=>{
         geoLocation()
         if(coordinates){
@@ -26,9 +40,6 @@ const WeatherDashboard = () => {
             locationQuery.refetch()
         }
     }
-
-    console.log("w:",weatherQuery.data)
-    console.log("f:",forecastQuery.data)
     
     if(locationLoading){
         return <p className='text-white'>Loading...</p>
@@ -67,7 +78,7 @@ const WeatherDashboard = () => {
     const locationName = locationQuery?.data?.[0]
 
     if(!weatherQuery.data || !forecastQuery.data){
-      return <p>Loading...</p>
+      return <WeatherSkeleton/>
     }
 
     if(weatherQuery?.error || forecastQuery?.error){
@@ -91,7 +102,10 @@ const WeatherDashboard = () => {
   return (
     <Layout>
     <div className='text-white md_sm:px-20 xl:px-10 pb-10'>
+      {/* Favourites */}
+      <Favourites/>
 
+      {/* My Location */}
       <div className='my-loaction '>
         <div className='flex justify-between items-center py-5'>
           <h1 className='text-xl font-semibold' >My Location</h1>
@@ -100,16 +114,15 @@ const WeatherDashboard = () => {
           </button>
         </div>
         <div className='flex flex-col gap-6'>
-        <div className='flex xl:flex-row flex-col gap-5'>
-          <CurrentWeather weatherQuery={weatherQuery} locationName={locationName}/>
-          <WeatherDetails weatherQuery={weatherQuery}/>
-        </div>
+          <div className='flex xl:flex-row flex-col gap-5'>
+            <CurrentWeather weatherQuery={weatherQuery} locationName={locationName}/>
+            <WeatherDetails weatherQuery={weatherQuery}/>
+          </div>
 
-        <div className='flex xl_g:flex-row flex-col gap-5'>
-          
-          <HourlyTemperature forecastQuery={forecastQuery}/>
-          <WeatherForecast forecastQuery={forecastQuery}/>
-        </div>
+          <div className='flex xl_g:flex-row flex-col gap-5'>    
+            <HourlyTemperature forecastQuery={forecastQuery}/>
+            <WeatherForecast forecastQuery={forecastQuery}/>
+          </div>
         </div>
       </div>
 

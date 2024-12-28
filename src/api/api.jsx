@@ -65,7 +65,7 @@ export const reverseCoding = async({lat,lon}) =>{
             appid:API_CONFIG.DEFAULT_PARAMS.appid
         })
 
-        const url = `${API_CONFIG.GEO_URL}${params.toString()}`
+        const url = `${API_CONFIG.GEO_URL}/reverse?${params.toString()}`
 
         const res = await fetch(url)
 
@@ -81,3 +81,32 @@ export const reverseCoding = async({lat,lon}) =>{
         console.error("Error while reverse coding")
     }
 }
+
+
+export const getCities = async(query) =>{
+    try {
+        console.log("q:",query)
+
+        const params =  new URLSearchParams({
+            q:query,
+            limit:5,
+            appid:API_CONFIG.DEFAULT_PARAMS.appid
+        })
+
+        const url = `${API_CONFIG.GEO_URL}/direct?${params.toString()}`
+
+        const res = await fetch(url)
+
+        if(!res.ok){
+            throw new error(`HTTP Error! status: ${res.status}`)
+        }
+
+        const data = await res.json()
+        console.log("g:",data)
+        return data
+        
+    } catch (error) {
+        console.error("Error while reverse coding")
+    }
+}
+

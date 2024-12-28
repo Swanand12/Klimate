@@ -9,6 +9,19 @@
   box-sizing: border-box;
 }
 
+.scrollable::-webkit-scrollbar {
+  height: 8px; /* Width of the scrollbar */
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background: transparent; /* Hide the track */
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background-color: #a9a9a9; /* Color of the scrollbar thumb */
+  border-radius: 4px; /* Rounded thumb */
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

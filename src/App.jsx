@@ -2,6 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import WeatherDashboard from "./pages/WeatherDashboard"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import WeatherSkeleton from "./components/WeatherSkeleton"
+import SearchCityWeather from "./pages/SearchCityWeather"
+import { Toaster } from "react-hot-toast"
 
 
 function App() {
@@ -11,8 +13,8 @@ function App() {
     element:<WeatherDashboard/>
   },
   {
-    path:"/s",
-    element:<WeatherSkeleton/>
+    path:"/city/:city",
+    element:<SearchCityWeather/>
   }])
 
   const queryClient = new QueryClient({
@@ -31,6 +33,7 @@ function App() {
     <>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router}></RouterProvider>
+      <Toaster/>
     </QueryClientProvider>
     </>
   )

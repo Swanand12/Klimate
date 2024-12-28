@@ -4,9 +4,12 @@ import { BiWind } from "react-icons/bi";
 import { ArrowDown, ArrowUp } from 'lucide-react';
 
 const CurrentWeather = ({weatherQuery, locationName}) => {
+  
+  // format temaperature
     const format = (temp) =>{
         return Math.round(temp)
       }
+
   return (
     <div className='min-w-[550px] bg-black flex gap-10 px-8 py-6 rounded-lg'>
             <div className='flex flex-col '>
@@ -31,7 +34,7 @@ const CurrentWeather = ({weatherQuery, locationName}) => {
                   </div>
                 </div>
               </div>
-              <div className='flex pt-4 gap-6'>
+              <div className='flex pt-4 gap-6 '>
                   <div className='flex items-center  gap-3 font-semibold'>
                     <FaTint/>
                     <div className='flex flex-col'>
@@ -48,7 +51,7 @@ const CurrentWeather = ({weatherQuery, locationName}) => {
                   </div>
               </div>
             </div>
-            <div className='flex flex-col w-full items-center justify-center'>
+            <div className='flex flex-col items-center justify-center'>
               <img className='w-[200px]' src={`https://openweathermap.org/img/wn/${weatherQuery?.data?.weather[0]?.icon}@2x.png`} alt='weather-img'/>
               <h1 className='font-semibold capitalize'>{weatherQuery?.data?.weather[0]?.description}</h1>
             </div>

@@ -6,7 +6,7 @@ import { FaTint } from 'react-icons/fa'
 
 const WeatherForecast = ({forecastQuery}) => {
 
-    console.log(forecastQuery)
+    // reduced forecast data for next 6 days 
     const daysForecast = forecastQuery?.data?.list.reduce((acc, forecast)=>{
         const date = format(new Date(forecast?.dt * 1000), "yyyy-MM-dd")
         
@@ -28,11 +28,8 @@ const WeatherForecast = ({forecastQuery}) => {
         return acc
     },{})
 
-    
-
+    // converted objects of data into array of objects
     const nextDays = Object.values(daysForecast).slice(0,6)
-
-    console.log(nextDays)
 
   return (
     <div className='flex px-8 py-6 flex-col bg-black xl_g:w-3/5 rounded-lg'>
