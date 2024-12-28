@@ -12,7 +12,7 @@ const Favourites = () => {
     // fetch favourites from localstorage
     useEffect(()=>{
         const parsedFavourites = JSON.parse(localStorage.getItem("favourites"))
-        setFavourites(parsedFavourites.reverse())
+        parsedFavourites && setFavourites(parsedFavourites.reverse())
     },[])
 
     // remove city from favourites
